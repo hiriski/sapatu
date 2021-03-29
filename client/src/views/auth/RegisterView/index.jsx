@@ -13,16 +13,7 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
-import Page from '../../../components/commons/Page';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.dark,
-    height: '100%',
-    paddingBottom: theme.spacing(3),
-    paddingTop: theme.spacing(3),
-  },
-}));
+import Page from 'src/components/commons/Page';
 
 const RegisterView = () => {
   const classes = useStyles();
@@ -40,22 +31,26 @@ const RegisterView = () => {
           <Formik
             initialValues={{
               email: '',
-              firstName: '',
-              lastName: '',
+              name: '',
+              username: '',
               password: '',
-              policy: false,
+              password_confirmation: '',
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()
-                .email('Must be a valid email')
-                .max(255)
-                .required('Email is required'),
-              firstName: Yup.string()
-                .max(255)
-                .required('First name is required'),
-              lastName: Yup.string().max(255).required('Last name is required'),
-              password: Yup.string().max(255).required('password is required'),
-              policy: Yup.boolean().oneOf([true], 'This field must be checked'),
+                .email('Email ini tidak valid')
+                .max(191)
+                .required('Email wajib diisi'),
+              name: Yup.string().max(191).required('Nama wajib diisi'),
+              username: Yup.string().max(191).required('Username wajib diisi'),
+              password: Yup.string().max(191).required('Password wajib diisi'),
+              password_confirmation: Yup.string()
+                .max(191)
+                .oneOf(
+                  [Yup.ref('password'), null],
+                  'Password konfirmasi tidak sama',
+                )
+                .required('Konfirmasi password harus diisi'),
             })}
             onSubmit={() => {
               navigate('/app/dashboard', { replace: true });
@@ -73,7 +68,7 @@ const RegisterView = () => {
               <form onSubmit={handleSubmit}>
                 <Box mb={3}>
                   <Typography color="textPrimary" variant="h2">
-                    Create new account
+                    Buat akun baru
                   </Typography>
                   <Typography
                     color="textSecondary"
@@ -84,34 +79,34 @@ const RegisterView = () => {
                   </Typography>
                 </Box>
                 <TextField
-                  error={Boolean(touched.firstName && errors.firstName)}
+                  error={Boolean(touched.name && errors.name)}
                   fullWidth
-                  helperText={touched.firstName && errors.firstName}
-                  label="First name"
+                  helperText={touched.name && errors.name}
+                  label="Nama"
                   margin="normal"
-                  name="firstName"
+                  name="name"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.firstName}
+                  value={values.name}
                   variant="outlined"
                 />
                 <TextField
-                  error={Boolean(touched.lastName && errors.lastName)}
+                  error={Boolean(touched.username && errors.username)}
                   fullWidth
-                  helperText={touched.lastName && errors.lastName}
-                  label="Last name"
+                  helperText={touched.username && errors.username}
+                  label="Username"
                   margin="normal"
-                  name="lastName"
+                  name="username"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.lastName}
+                  value={values.username}
                   variant="outlined"
                 />
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
                   helperText={touched.email && errors.email}
-                  label="Email Address"
+                  label="Email"
                   margin="normal"
                   name="email"
                   onBlur={handleBlur}
@@ -133,25 +128,25 @@ const RegisterView = () => {
                   value={values.password}
                   variant="outlined"
                 />
-                <Box alignItems="center" display="flex" ml={-1}>
-                  <Checkbox
-                    checked={values.policy}
-                    name="policy"
-                    onChange={handleChange}
-                  />
-                  <Typography color="textSecondary" variant="body1">
-                    I have read the{' '}
-                    <Link
-                      color="primary"
-                      component={RouterLink}
-                      to="#"
-                      underline="always"
-                      variant="h6"
-                    >
-                      Terms and Conditions
-                    </Link>
-                  </Typography>
-                </Box>
+                <TextField
+                  error={Boolean(
+                    touched.password_confirmation &&
+                      errors.password_confirmation,
+                  )}
+                  fullWidth
+                  helperText={
+                    touched.password_confirmation &&
+                    errors.password_confirmation
+                  }
+                  label="Konfirmasi Password"
+                  margin="normal"
+                  name="password_confirmation"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="password_confirmation"
+                  value={values.password_confirmation}
+                  variant="outlined"
+                />
                 {Boolean(touched.policy && errors.policy) && (
                   <FormHelperText error>{errors.policy}</FormHelperText>
                 )}
@@ -164,7 +159,7 @@ const RegisterView = () => {
                     type="submit"
                     variant="contained"
                   >
-                    Sign up now
+                    Daftar
                   </Button>
                 </Box>
                 <Typography color="textSecondary" variant="body1">
@@ -181,5 +176,14 @@ const RegisterView = () => {
     </Page>
   );
 };
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: theme.palette.background.paper,
+    height: '100%',
+    paddingBottom: theme.spacing(3),
+    paddingTop: theme.spacing(3),
+  },
+}));
 
 export default RegisterView;

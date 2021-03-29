@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 import Footer from './Footer';
 
 const AuthLayout = () => {
   const classes = useStyles();
+  const theme = useTheme();
+  const isNotMobile = useMediaQuery(theme.breakpoints.up('lg'));
   return (
     <div className={classes.root}>
       <div className={classes.wrapper}>
+        {isNotMobile && <div className={classes.bgImg} />}
         <div className={classes.contentContainer}>
           <div className={classes.content}>
             <Outlet />
@@ -21,28 +24,35 @@ const AuthLayout = () => {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.dark,
+    backgroundColor: theme.palette.background.paper,
     display: 'flex',
-    height: '100%',
+    flexDirection: 'column',
+    minHeight: '100vh',
     overflow: 'hidden',
     width: '100%',
   },
   wrapper: {
     display: 'flex',
-    flex: '1 1 auto',
+    flex: '1',
     overflow: 'hidden',
-    paddingTop: 64,
-    [theme.breakpoints.up('lg')]: {
-      paddingLeft: 256,
-    },
+  },
+  bgImg: {
+    backgroundImage: `url('/static/images/martin-katler-fpjiQ8xaG6M-unsplash.jpg')`,
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    flex: 1,
+    display: 'flex',
   },
   contentContainer: {
     display: 'flex',
-    flex: '1 1 auto',
-    overflow: 'hidden',
+    flex: '1',
   },
   content: {
-    flex: '1 1 auto',
+    flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     height: '100%',
     overflow: 'auto',
   },

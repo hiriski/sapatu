@@ -12,7 +12,8 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
-import Page from '../../../components/commons/Page';
+import Page from 'src/components/commons/Page';
+import { ROUTES } from 'src/constants';
 
 const LoginView = () => {
   const classes = useStyles();
@@ -29,18 +30,18 @@ const LoginView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'demo@devias.io',
-              password: 'Password123',
+              email: 'riski',
+              password: 'secret',
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()
-                .email('Must be a valid email')
+                // .email('Mohon isi email dengan benar')
                 .max(255)
-                .required('Email is required'),
-              password: Yup.string().max(255).required('Password is required'),
+                .required('Email harus diisi ya.'),
+              password: Yup.string().max(255).required('Password harus diisi'),
             })}
             onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
+              navigate(ROUTES.DASHBOARD, { replace: true });
             }}
           >
             {({
@@ -55,60 +56,25 @@ const LoginView = () => {
               <form onSubmit={handleSubmit}>
                 <Box mb={3}>
                   <Typography color="textPrimary" variant="h2">
-                    Sign in
+                    Log In
                   </Typography>
                   <Typography
                     color="textSecondary"
                     gutterBottom
                     variant="body2"
                   >
-                    Sign in on the internal platform
-                  </Typography>
-                </Box>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} md={6}>
-                    <Button
-                      color="primary"
-                      fullWidth
-                      // startIcon={<FacebookIcon />}
-                      onClick={handleSubmit}
-                      size="large"
-                      variant="contained"
-                    >
-                      Login with Facebook
-                    </Button>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <Button
-                      fullWidth
-                      // startIcon={<GoogleIcon />}
-                      onClick={handleSubmit}
-                      size="large"
-                      variant="contained"
-                    >
-                      Login with Google
-                    </Button>
-                  </Grid>
-                </Grid>
-                <Box mt={3} mb={1}>
-                  <Typography
-                    align="center"
-                    color="textSecondary"
-                    variant="body1"
-                  >
-                    or login with email address
+                    Login to your account
                   </Typography>
                 </Box>
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
                   helperText={touched.email && errors.email}
-                  label="Email Address"
+                  label="Username / Email"
                   margin="normal"
                   name="email"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  type="email"
                   value={values.email}
                   variant="outlined"
                 />
@@ -134,12 +100,16 @@ const LoginView = () => {
                     type="submit"
                     variant="contained"
                   >
-                    Sign in now
+                    Login
                   </Button>
                 </Box>
                 <Typography color="textSecondary" variant="body1">
                   Don&apos;t have an account?{' '}
-                  <Link component={RouterLink} to="/register" variant="h6">
+                  <Link
+                    component={RouterLink}
+                    to={ROUTES.REGISTER}
+                    variant="h6"
+                  >
                     Sign up
                   </Link>
                 </Typography>
@@ -154,7 +124,7 @@ const LoginView = () => {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.dark,
+    backgroundColor: theme.palette.background.paper,
     height: '100%',
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(3),
