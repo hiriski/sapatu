@@ -1,5 +1,5 @@
 export const ROUTES = {
-  NOT_MATCH: '/404',
+  NOT_MATCH: '/app/404',
   LOGIN: '/login',
   REGISTER: '/register',
   DASHBOARD: '/app/dashboard',
@@ -12,4 +12,10 @@ export const ROUTES = {
   CREATE_RECEIPT: '/app/receipt/create',
   RECEIPT_LIST: '/app/receipt',
   RECEIPT_DETAILS: '/app/receipt/:id',
+  COURIER_TRACKING: '/app/receipt/track/:id',
+  SETTINGS: '/app/settings',
+  TEAM: '/app/team',
+  CREATE_USER: '/app/team/create',
+  CHAT: '/app/chat',
+  KNOWLEDGE: '/app/knowledge',
 };

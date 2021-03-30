@@ -8,22 +8,27 @@ import MainLayout from '../layouts/MainLayout';
 import AuthLayout from '../layouts/AuthLayout';
 
 /* views */
-import DashboardView from '../views/dashboard';
-import LoginView from '../views/auth/LoginView';
-import RegisterView from '../views/auth/RegisterView';
-import NotMatchView from '../views/errors/NotMatchView';
-import SettingsView from '../views/settings';
+import DashboardView from 'src/views/dashboard';
+import LoginView from 'src/views/auth/LoginView';
+import RegisterView from 'src/views/auth/RegisterView';
+import NotMatchView from 'src/views/errors/NotMatchView';
+import SettingsView from 'src/views/settings';
 
 import CreateProductView from 'src/views/product/CreateProductView';
 import ProductDetailsView from 'src/views/product/ProductDetailsView';
-import ProductListView from '../views/product/ProductListView';
+import ProductListView from 'src/views/product/ProductListView';
 
 import CreateOrderView from 'src/views/order/CreateOrderView';
 import OrderDetailsView from 'src/views/order/OrderDetailsView';
-import OrderListView from '../views/order/OrderListView';
+import OrderListView from 'src/views/order/OrderListView';
 
 import CreateReceiptView from 'src/views/receipt/CreateReceiptView';
-import ReceiptListView from '../views/receipt/ReceiptListView';
+import ReceiptListView from 'src/views/receipt/ReceiptListView';
+import ChatListView from 'src/views/chat/ChatListView';
+import TeamListView from 'src/views/team/TeamListView';
+import KnowledgeView from 'src/views/knowledge';
+import CourierTrackingView from 'src/views/receipt/CourierTrackingView';
+import CreateUserView from 'src/views/team/CreateUserView';
 
 const routes = (isLoggedIn) => [
   {
@@ -57,11 +62,31 @@ const routes = (isLoggedIn) => [
         element: <Outlet />,
         children: [
           { path: '/create', element: <CreateReceiptView /> },
+          { path: '/track/:id', element: <CourierTrackingView /> },
           { path: '/', element: <ReceiptListView /> },
         ],
       },
+      {
+        path: 'chat',
+        element: <Outlet />,
+        children: [{ path: '/', element: <ChatListView /> }],
+      },
+      {
+        path: 'team',
+        element: <Outlet />,
+        children: [
+          { path: '/create', element: <CreateUserView /> },
+          { path: '/', element: <TeamListView /> },
+        ],
+      },
+      {
+        path: 'settings',
+        element: <Outlet />,
+        children: [{ path: '/', element: <SettingsView /> }],
+      },
+      { path: 'knowledge', element: <KnowledgeView /> },
       { path: 'settings', element: <SettingsView /> },
-      { path: '/', element: <Navigate to={ROUTES.DASHBOARD} /> },
+      { path: '404', element: <NotMatchView /> },
       { path: '*', element: <Navigate to={ROUTES.NOT_MATCH} /> },
     ],
   },

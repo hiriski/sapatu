@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import {
-  AppBar,
-  Badge,
-  Box,
-  Hidden,
-  IconButton,
-  Toolbar,
-  makeStyles,
-} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
+import Badge from '@material-ui/core/Badge';
+import Hidden from '@material-ui/core/Hidden';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
@@ -18,7 +16,7 @@ import Logo from '../Logo';
 
 const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
   const classes = useStyles();
-  const [notifications] = useState([]);
+  const [notifications] = useState([1, 2, 3]);
 
   return (
     <AppBar className={clsx(classes.root, className)} elevation={0} {...rest}>
@@ -51,8 +49,14 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
   );
 };
 
-const useStyles = makeStyles(() => ({
-  root: {},
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: theme.palette.background.paper,
+    color: theme.palette.text.primary,
+    [theme.breakpoints.up('lg')]: {
+      paddingLeft: theme.custom.sidebar.width,
+    },
+  },
   avatar: {
     width: 60,
     height: 60,

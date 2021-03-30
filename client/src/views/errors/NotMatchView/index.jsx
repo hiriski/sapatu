@@ -1,9 +1,18 @@
 import React from 'react';
-import { Box, Container, Typography, makeStyles } from '@material-ui/core';
+import {
+  Box,
+  Container,
+  Typography,
+  makeStyles,
+  Button,
+} from '@material-ui/core';
 import Page from '../../../components/commons/Page';
+import { ROUTES } from 'src/constants';
+import { useNavigate } from 'react-router-dom';
 
 const NotMatchView = () => {
   const classes = useStyles();
+  const navigate = useNavigate();
 
   return (
     <Page className={classes.root} title="404">
@@ -14,20 +23,30 @@ const NotMatchView = () => {
         justifyContent="center"
       >
         <Container maxWidth="md" className={classes.container}>
-          <Box textAlign="center">
+          <Box>
             <img
               alt="Not Found"
               className={classes.image}
               src="/static/images/error-page-not-found-vector.jpg"
             />
           </Box>
-          <Typography align="center" color="textPrimary" variant="h1">
-            404: Opss..
-          </Typography>
-          <Typography align="center" color="textPrimary" variant="subtitle2">
-            You either tried some shady route or you came here by mistake.
-            Whichever it is, try using the navigation
-          </Typography>
+          <Box className={classes.textContainer}>
+            <Typography color="textPrimary" variant="h1">
+              404: Opss..
+            </Typography>
+            <Typography color="textSecondary" variant="subtitle2">
+              Aku nggak bisa menemukan halaman yang kamu minta
+            </Typography>
+            <Box className={classes.buttonContainer}>
+              <Button
+                onClick={() => navigate(ROUTES.DASHBOARD)}
+                variant="outlined"
+                color="primary"
+              >
+                Balik ke Dashboard
+              </Button>
+            </Box>
+          </Box>
         </Container>
       </Box>
     </Page>
@@ -50,7 +69,21 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 50,
     display: 'inline-block',
     maxWidth: '100%',
-    width: 300,
+    width: 250,
+  },
+  textContainer: {
+    paddingLeft: theme.spacing(2),
+    '& h1': {
+      fontWeight: 'bold',
+      fontSize: 34,
+      marginBottom: theme.spacing(2),
+    },
+    '& .MuiTypography-subtitle2': {
+      fontSize: 16,
+    },
+  },
+  buttonContainer: {
+    marginTop: theme.spacing(3),
   },
 }));
 

@@ -2,16 +2,16 @@ import React from 'react';
 import Page from 'src/components/commons/Page';
 import PageTitle from 'src/components/PageTitle';
 
-const CreateOrderView = () => {
+const ChatListView = () => {
   return (
-    <Page title="Buat Pesanan">
+    <Page title="Chatting">
       <PageTitle
-        title="Buat Pesanan"
-        subtitle="Buat Pesanan kemudian serahkan ke tim gudang"
+        title="Chatting"
+        subtitle="Ngobrol langsung sesama rekan tim"
       />
       <div>Create order</div>
     </Page>
   );
 };
 
-export default CreateOrderView;
+export default ChatListView;
