@@ -10,6 +10,12 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
+    /**
+     * Product statuses
+     */
+    const ACTIVE = "active";
+    const INACTIVE = "inactive";
+
     protected $fillable = [
         'user_id',
         'title',
@@ -28,6 +34,10 @@ class Product extends Model
     ];
 
     protected $with = ['user', 'image'];
+
+    protected $attributes = [
+        'status'    => self::ACTIVE,
+    ];
 
     public function orders() {
         return $this->hasMany(Order::class);

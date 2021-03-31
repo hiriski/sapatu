@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->decimal('price', 12, 0)->nullable();
             $table->enum('size', ['36', '37', '38', '39', '40', '41', '42']);
             $table->unsignedBigInteger('stock');
-            $table->enum('status', ['active, inactive']);
+            $table->enum('status', ['active', 'inactive']);
             $table->softDeletes();
             $table->timestamps();
 
