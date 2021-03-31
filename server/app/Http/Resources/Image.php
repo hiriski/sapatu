@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\URL;
 
 class Image extends JsonResource
 {
@@ -16,10 +17,11 @@ class Image extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            'id'        => $this->id,
-            'image_sm'  => $this->image_sm,
-            'image_md'  => $this->image_md,
-            'image_lg'  => $this->image_lg,
+            'id'            => $this->id,
+            'image_sm'      => URL::to('/storage/images/') . '/' . $this->image_type . '/' . $this->image_sm,
+            'image_md'      => URL::to('/storage/images/') . '/' . $this->image_type . '/' . $this->image_md,
+            'image_lg'      => URL::to('/storage/images/') . '/' . $this->image_type . '/' . $this->image_lg,
+            'image_type'    => $this->image_type
         ];
     }
 }

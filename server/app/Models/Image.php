@@ -9,10 +9,17 @@ class Image extends Model
 {
     use HasFactory;
 
+    const SIZES = [
+        'image_sm',
+        'image_md',
+        'image_lg',
+    ];
+
     protected $fillable = [
         'image_sm',
         'image_md',
         'image_lg',
+        'image_type'
     ];
 
     public function post() {

@@ -18,6 +18,7 @@ class CreateImagesTable extends Migration
             $table->string('image_sm');
             $table->string('image_md');
             $table->string('image_lg');
+            $table->enum('image_type', ['products', 'receipts', 'users']);
             $table->timestamps();
         });
     }
