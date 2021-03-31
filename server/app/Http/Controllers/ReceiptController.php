@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Receipt;
 use Illuminate\Http\Request;
 
 class ReceiptController extends Controller
@@ -30,10 +31,10 @@ class ReceiptController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Receipt  $receipt
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Receipt $receipt)
     {
         //
     }
@@ -42,10 +43,10 @@ class ReceiptController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Receipt  $receipt
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Receipt $receipt)
     {
         //
     }
@@ -53,10 +54,10 @@ class ReceiptController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Receipt  $receipt
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Receipt $receipt)
     {
         //
     }

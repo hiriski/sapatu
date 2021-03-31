@@ -35,6 +35,8 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::apiResource('/product', App\Http\Controllers\ProductController::class);
     
     // order route
+    Route::apiResource('/order/item', App\Http\Controllers\OrderItemController::class);
+
     Route::apiResource('/order', App\Http\Controllers\OrderController::class);
     
     // receipt route

@@ -11,23 +11,21 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
-        'product_id',
-        'quantity',
         'notes',
     ];
 
     protected $casts = [
-        'user_id'       => 'integer',
-        'product_id'    => 'integer',
+        'user_id'   => 'integer',
+        'notes'     => 'string',
     ];
 
-    protected $with = ['user', 'product'];
-
-    public function product() {
-        return $this->belongsTo(Order::class);
-    }
+    protected $with = ['user'];
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function items() {
+        return $this->hasMany(OrderItem::class);
     }
 }

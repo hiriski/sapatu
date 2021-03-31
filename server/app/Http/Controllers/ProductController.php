@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 // resources
 use App\Http\Resources\Product as ProductResource;
 use App\Http\Resources\ProductCollection;
 
-// Request
+// request
 use App\Http\Requests\StoreProduct;
 
 class ProductController extends Controller
@@ -36,7 +36,7 @@ class ProductController extends Controller
         $requestProduct = $request->only([
             'title', 'user_id', 'image_id', 'body', 'price', 'size', 'stock']
         );
-        $requestProduct['user_id'] = auth()->user()->id;
+        $requestProduct['user_id'] = auth()->id();
         $product = Product::create($requestProduct);
         return new ProductResource($product);
     }
@@ -44,34 +44,38 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Product $product)
     {
-        //
+        return new ProductResource($product);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $requestProduct = $request->only([
+            'title', 'image_id', 'body', 'price', 'size', 'stock'
+        ]);
+        $product->update($requestProduct);
+        return new ProductResource($product);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
     }
 }

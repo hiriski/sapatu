@@ -7,11 +7,12 @@ use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Carbon\Carbon;
-use Image;
+use App\Models\Image;
+use Image as InterventionImage;
 
 // resources
-use App\Http\Resources\Product as ProductResource;
-use App\Http\Resources\ProductCollection;
+use App\Http\Resources\Image as ImageResource;
+use App\Http\Resources\ImageCollection;
 
 // Request
 use App\Http\Requests\StoreImage;
@@ -37,24 +38,43 @@ class ImageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(StoreImage $request) {
-
         $sizes = [
             'image_sm'  => 200,
             'image_md'  => 400,
             'image_lg'  => 1000,
         ];
-
         try {
-            if($image = $request->file('image')) {
-                $exts = $image->getClientOriginalExtension();
-                $reqFileName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
-                
-                $path = storage_path('app/public/images/products');
+            if($requestImage = $request->file('image')) {
+                $fileExtension  = $requestImage->getClientOriginalExtension();
+                $reqFileName    = pathinfo(
+                    $requestImage->getClientOriginalName(),
+                    PATHINFO_FILENAME
+                );
+                // $fileName = $reqFileName . '.' . $fileExtension;
 
-                $foo = Image::make($image->getRealPath());
-                $foo->save($path, 80, 'jpg');
-                dd('OK');
+                /* Define extension file */
+                $EXTENSION_IMAGE = "jpg";
+
+                /* path */
+                $path = storage_path('app/public/images/products/');
+
+                $modelImage = new Image;
+
                 foreach($sizes as $key => $value) {
+                    /* Make an image */
+                    $image = InterventionImage::make($requestImage->getRealPath())
+                        ->resize((int) $value, null, function($constraint) {
+                            $constraint->aspectRatio();
+                        });
+
+                    /* Create file name */
+                    $fileName = time() . '-' . $key . '.' . $fileExtension;
+
+                    /* Save file */
+                    $image->save($path . $fileName, 90);
+
+                    $modelImage[$key] = $value;
+                    return new ImageResource($modelImage);
                 }
             } 
         } catch(Exception $exception) {
