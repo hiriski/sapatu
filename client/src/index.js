@@ -3,10 +3,13 @@ import { render } from 'react-dom';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
+import ReduxProvider from './providers/ReduxProvider';
 
 render(
   <BrowserRouter>
-    <App />
+    <ReduxProvider>
+      <App />
+    </ReduxProvider>
   </BrowserRouter>,
   document.getElementById('root'),
 );

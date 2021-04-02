@@ -1,14 +1,14 @@
 import React from 'react';
-import {
-  Box,
-  Container,
-  Typography,
-  makeStyles,
-  Button,
-} from '@material-ui/core';
+
+import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+
 import Page from '../../../components/commons/Page';
 import { ROUTES } from 'src/constants';
-import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 const NotMatchView = () => {
   const classes = useStyles();
@@ -35,11 +35,12 @@ const NotMatchView = () => {
               404: Opss..
             </Typography>
             <Typography color="textSecondary" variant="subtitle2">
-              Aku nggak bisa menemukan halaman yang kamu minta
+              Aku nggak bisa menemukan halaman yang kamu minta.
             </Typography>
             <Box className={classes.buttonContainer}>
               <Button
-                onClick={() => navigate(ROUTES.DASHBOARD)}
+                component={RouterLink}
+                to={ROUTES.DASHBOARD}
                 variant="outlined"
                 color="primary"
               >

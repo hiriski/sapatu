@@ -5,9 +5,10 @@ import routes from './routes';
 /* providers */
 import ThemeProvider from 'src/providers/ThemeProvider';
 import GlobalStyles from 'src/components/commons/GlobalStyles';
+import { API_URL } from './constants';
 
 const App = () => {
-  const isLoggedIn = true;
+  const isLoggedIn = false;
   const rootRoute = useRoutes(routes(isLoggedIn));
   return (
     <ThemeProvider>

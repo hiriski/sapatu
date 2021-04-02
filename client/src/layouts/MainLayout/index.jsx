@@ -21,10 +21,10 @@ const MainLayout = () => {
       ) : (
         <>
           <Sidebar />
-          <TopBar />
+          {/* <TopBar /> */}
           <FloatingActions />
           <div className={classes.wrapper}>
-            <Container className={classes.contentContainer}>
+            <Container disableGutters className={classes.contentContainer}>
               <div className={classes.content}>
                 <Outlet />
               </div>
@@ -38,7 +38,7 @@ const MainLayout = () => {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
     display: 'flex',
     minHeight: '100vh',
     overflow: 'hidden',
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flex: '1 1 auto',
     overflow: 'hidden',
-    paddingTop: 64,
+    // paddingTop: theme.spacing(12),
     [theme.breakpoints.up('lg')]: {
       paddingLeft: theme.custom.sidebar.width,
     },
@@ -62,11 +62,13 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flex: '1 1 auto',
     overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
   },
   content: {
     flex: '1 1 auto',
     height: '100%',
     overflow: 'auto',
+    paddingTop: theme.spacing(2),
   },
 }));
 

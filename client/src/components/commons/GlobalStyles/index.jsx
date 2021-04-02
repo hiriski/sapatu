@@ -12,8 +12,15 @@ const useStyles = makeStyles((theme) =>
       a: {
         textDecoration: 'none',
       },
+      '.MuiListItemText-primary': {
+        fontSize: '0.97rem',
+      },
+      '.MuiSvgIcon-root': {
+        fontSize: '1.3rem',
+      },
       '::-webkit-scrollbar': {
         width: 7,
+        height: 6,
         backgroundColor: theme.palette.background.paper,
       },
       '::-webkit-scrollbar-track': {
@@ -22,7 +29,7 @@ const useStyles = makeStyles((theme) =>
       '::-webkit-scrollbar-thumb': {
         borderRadius: 4,
         // backgroundColor: theme.palette.background.paper,
-        backgroundColor: theme.palette.primary.light,
+        backgroundColor: '#fdeff4',
       },
     },
   }),

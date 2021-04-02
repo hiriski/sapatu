@@ -1,8 +1,8 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, Link as RouterLink } from 'react-router-dom';
 
 import { makeStyles, useTheme, useMediaQuery } from '@material-ui/core';
-
+import clsx from 'clsx';
 import Box from '@material-ui/core/Box';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -19,14 +19,9 @@ import navigations from './navigations';
 
 const Sidebar = () => {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
   const classes = useStyles();
   const theme = useTheme();
   const isMatchesToDesktop = useMediaQuery(theme.breakpoints.up('lg'));
-
-  const handleNavigate = (path) => {
-    navigate(path);
-  };
 
   const renderSidebarContent = (
     <div className={classes.drawerContent}>
@@ -34,13 +29,13 @@ const Sidebar = () => {
         {navigations.map(({ title, Icon, path, children }, index) => (
           <div key={index}>
             <ListItem
-              disableRipple
-              className={classes.listItemButton}
+              className={classes.listItemRounded}
               button
-              onClick={() => handleNavigate(path)}
+              component={RouterLink}
+              to={path}
             >
               <ListItemIcon>{Icon}</ListItemIcon>
-              <ListItemText primary={title} />
+              <ListItemText primary={title} className={classes.listText} />
               {children &&
                 (pathname.startsWith(path) ? (
                   <ExpandLessIcon />
@@ -50,6 +45,7 @@ const Sidebar = () => {
             </ListItem>
             {children && (
               <Collapse
+                className={classes.collapse}
                 in={pathname.startsWith(path)}
                 timeout="auto"
                 unmountOnExit
@@ -57,12 +53,19 @@ const Sidebar = () => {
                 {children.map(({ title, path, Icon }, index) => (
                   <List key={index} component="div" disablePadding>
                     <ListItem
-                      className={classes.itemNested}
+                      className={clsx(
+                        classes.listItemRounded,
+                        classes.itemNested,
+                      )}
                       button
-                      onClick={() => handleNavigate(path)}
+                      component={RouterLink}
+                      to={path}
                     >
                       <ListItemIcon>{Icon}</ListItemIcon>
-                      <ListItemText primary={title} />
+                      <ListItemText
+                        primary={title}
+                        className={classes.listText}
+                      />
                     </ListItem>
                   </List>
                 ))}
@@ -103,7 +106,17 @@ const useStyles = makeStyles((theme) => ({
     borderRight: 0,
     padding: theme.spacing(0, 2),
   },
-  listItemButton: {},
+  collapse: {
+    marginBottom: theme.spacing(1),
+  },
+  listItemRounded: {
+    borderRadius: theme.spacing(0.5),
+    color: theme.palette.primary.main,
+  },
+  listText: {
+    color: theme.palette.text.primary,
+    fontWeight: theme.typography.fontWeightBold,
+  },
   itemNested: {
     paddingLeft: theme.spacing(4),
   },

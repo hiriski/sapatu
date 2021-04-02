@@ -11,14 +11,14 @@ export default createMuiTheme({
       paper: colors.common.white,
     },
     primary: {
-      // main: colors.indigo[500],
+      main: '#01a734',
+      dark: '#04802a',
+      light: '#59ff8c',
+    },
+    secondary: {
       main: '#f70c62',
       dark: '#d80d57',
       light: '#ffc1d8',
-    },
-    secondary: {
-      main: colors.indigo[500],
-      dark: colors.indigo[800],
     },
     text: {
       primary: colors.blueGrey[900],

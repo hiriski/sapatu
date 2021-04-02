@@ -2,18 +2,20 @@ import React from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  FormHelperText,
-  Link,
-  TextField,
-  Typography,
-  makeStyles,
-} from '@material-ui/core';
+
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
+import TextField from '@material-ui/core/TextField';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+
 import Page from 'src/components/commons/Page';
+import { ROUTES } from 'src/constants';
 
 const RegisterView = () => {
   const classes = useStyles();
@@ -164,7 +166,7 @@ const RegisterView = () => {
                 </Box>
                 <Typography color="textSecondary" variant="body1">
                   Have an account?{' '}
-                  <Link component={RouterLink} to="/login" variant="h6">
+                  <Link component={RouterLink} to={ROUTES.LOGIN} variant="h6">
                     Sign in
                   </Link>
                 </Typography>

@@ -2,22 +2,24 @@ import React from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Link,
-  TextField,
-  Typography,
-  makeStyles,
-} from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+
 import Page from 'src/components/commons/Page';
 import { ROUTES } from 'src/constants';
+import { useDispatch } from 'react-redux';
+import { login } from 'src/redux/actions/authActions';
 
 const LoginView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <Page className={classes.root} title="Login">
@@ -30,18 +32,20 @@ const LoginView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'riski',
+              username: 'riski',
               password: 'secret',
             }}
             validationSchema={Yup.object().shape({
-              email: Yup.string()
+              username: Yup.string()
                 // .email('Mohon isi email dengan benar')
                 .max(255)
-                .required('Email harus diisi ya.'),
+                .required('Username harus diisi ya.'),
               password: Yup.string().max(255).required('Password harus diisi'),
             })}
-            onSubmit={() => {
-              navigate(ROUTES.DASHBOARD, { replace: true });
+            onSubmit={(values) => {
+              // navigate(ROUTES.DASHBOARD, { replace: true });
+              // console.log(values);
+              dispatch(login(values));
             }}
           >
             {({
@@ -67,15 +71,15 @@ const LoginView = () => {
                   </Typography>
                 </Box>
                 <TextField
-                  error={Boolean(touched.email && errors.email)}
+                  error={Boolean(touched.username && errors.username)}
                   fullWidth
-                  helperText={touched.email && errors.email}
-                  label="Username / Email"
+                  helperText={touched.username && errors.username}
+                  label="Username"
                   margin="normal"
-                  name="email"
+                  name="username"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.email}
+                  value={values.username}
                   variant="outlined"
                 />
                 <TextField
