@@ -22,6 +22,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'role_id'
     ];
 
     /**
@@ -41,6 +42,11 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'role_id'           => 'integer'
+    ];
+
+    protected $attributes = [
+        'role_id'   => 2, // Admin
     ];
 
     public function orders() {

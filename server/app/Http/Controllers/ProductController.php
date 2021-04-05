@@ -14,6 +14,9 @@ use App\Http\Requests\StoreProduct;
 
 class ProductController extends Controller
 {
+
+    protected $itemPerPage = 25;
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +24,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::paginate($this->itemPerPage);
         return new ProductCollection($products);
     }
 

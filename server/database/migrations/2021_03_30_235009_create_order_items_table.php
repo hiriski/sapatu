@@ -17,12 +17,9 @@ class CreateOrderItemsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('order_id');
+            $table->decimal('price', 12, 0)->nullable();
             $table->integer('quantity');
             $table->text('notes')->nullable();
-
-            $table->foreign('product_id')
-                ->references('id')
-                ->on('products');
 
             $table->foreign('order_id')
                 ->references('id')
