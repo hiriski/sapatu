@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
     bottom: theme.spacing(4),
     right: theme.spacing(5),
+    zIndex: theme.zIndex.tooltip,
   },
 }));
 

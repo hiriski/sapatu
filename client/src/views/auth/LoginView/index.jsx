@@ -11,15 +11,19 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Page from 'src/components/commons/Page';
 import { ROUTES } from 'src/constants';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from 'src/redux/actions/authActions';
+import Page from 'src/components/commons/Page';
 
 const LoginView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { isLoading, isSuccess, isError, errorMessage } = useSelector(
+    (state) => state.auth.login,
+  );
 
   return (
     <Page className={classes.root} title="Login">

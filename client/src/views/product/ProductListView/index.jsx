@@ -11,15 +11,32 @@ import StoreIcon from '@material-ui/icons/Store';
 
 import { PRODUCT_SIZES, ROUTES } from 'src/constants';
 import SidebarProductList from 'src/components/SidebarProductList';
-import ProductItem from 'src/components/ProductItem';
+import TableProductList from 'src/components/TableProductList';
+
+import api from 'src/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProductList } from 'src/redux/actions/productActions';
 
 const ProductListView = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { isFetching, isSuccess, products } = useSelector(
+    (state) => state.product.list,
+  );
+
+  const fetchData = () => {
+    dispatch(fetchProductList());
+  };
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <Page title="List Produk">
       <Container>
         <Grid container spacing={4}>
-          <Grid item xs={12} lg={8}>
+          <Grid item xs={12} lg={12}>
             <PageTitle
               title="List Produk"
               subtitle="Kelola produk dengan sangat mudah"
@@ -31,11 +48,8 @@ const ProductListView = () => {
               width="100%"
               justifyContent="center"
             >
-              <ProductItem title="Hello World" info="Lorem ipsum dolor" />
+              <TableProductList products={products} />
             </Box>
-          </Grid>
-          <Grid item xs={12} lg={4}>
-            <SidebarProductList />
           </Grid>
         </Grid>
       </Container>

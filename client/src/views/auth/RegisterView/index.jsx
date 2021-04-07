@@ -6,20 +6,23 @@ import { Formik } from 'formik';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+// import Checkbox from '@material-ui/core/Checkbox';
+// import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import TextField from '@material-ui/core/TextField';
-import Checkbox from '@material-ui/core/Checkbox';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Page from 'src/components/commons/Page';
 import { ROUTES } from 'src/constants';
+import { useDispatch } from 'react-redux';
+import { register } from 'src/redux/actions/authActions';
 
 const RegisterView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <Page className={classes.root} title="Register">
@@ -54,8 +57,9 @@ const RegisterView = () => {
                 )
                 .required('Konfirmasi password harus diisi'),
             })}
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
+            onSubmit={(values) => {
+              // navigate('/app/dashboard', { replace: true });
+              dispatch(register(values));
             }}
           >
             {({
@@ -140,12 +144,12 @@ const RegisterView = () => {
                     touched.password_confirmation &&
                     errors.password_confirmation
                   }
-                  label="Konfirmasi Password"
+                  label="Konfirmasi password"
                   margin="normal"
                   name="password_confirmation"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  type="password_confirmation"
+                  type="password"
                   value={values.password_confirmation}
                   variant="outlined"
                 />

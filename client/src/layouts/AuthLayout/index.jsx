@@ -4,6 +4,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import Footer from './Footer';
+import Snackbar from 'src/components/Snackbar';
 
 const AuthLayout = () => {
   const classes = useStyles();
@@ -20,6 +21,7 @@ const AuthLayout = () => {
         </div>
       </div>
       <Footer />
+      <Snackbar />
     </div>
   );
 };

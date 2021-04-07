@@ -3,14 +3,18 @@ import { batch } from 'react-redux';
 import { API_URL, USER_TOKEN_KEY } from 'src/constants';
 import LocalStorageService from 'src/services/LocalStorageService';
 import AuthService from 'src/services/AuthService';
-// import { AlertTypes } from 'src/constants/AlertTypes';
-// import { setUserData } from './userActions';
+
+/** another actions */
+import { showAlert } from './alertActions';
 
 /** Actions types  */
+export const REGISTER_REQUEST = 'REGISTER_REQUEST';
+export const REGISTER_FAILURE = 'REGISTER_FAILURE';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
+// export const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
 export const FETCHING_AUTHENTICATED_USER_REQUEST =
   'FETCHING_AUTHENTICATED_USER_REQUEST';
 export const FETCHING_AUTHENTICATED_USER_FAILURE =
@@ -18,7 +22,16 @@ export const FETCHING_AUTHENTICATED_USER_FAILURE =
 export const FETCHING_AUTHENTICATED_USER_SUCCESS =
   'FETCHING_AUTHENTICATED_USER_SUCCESS';
 
-/** actions */
+// export const setAuthToken = (token) => ({
+//   type: SET_AUTH_TOKEN,
+//   payload: token,
+// });
+
+/**
+ * ------------------------
+ * Login action
+ * ------------------------
+ * */
 export const loginRequest = () => ({
   type: LOGIN_REQUEST,
 });
@@ -33,30 +46,103 @@ export const loginSuccess = (data) => ({
   payload: data,
 });
 
-export const setAuthToken = (token) => ({
-  type: SET_AUTH_TOKEN,
-  payload: token,
+export const login = (credentials) => {
+  return async (dispatch) => {
+    let errMessage = 'Login failed';
+    dispatch(loginRequest());
+    try {
+      const response = await axios.post(API_URL + '/login', credentials);
+      if (response.status === 200) {
+        LocalStorageService.setItem(
+          USER_TOKEN_KEY,
+          JSON.stringify(response.data),
+        );
+        dispatch(loginSuccess(response.data));
+      }
+    } catch (e) {
+      if (e.response !== undefined) {
+        if (e.response.status === 422) {
+          errMessage = 'Username / Password yang anda masukan salah';
+          dispatch(loginFailure(errMessage));
+          batch(() => {
+            dispatch(
+              showAlert({
+                message: errMessage,
+                severity: 'error',
+              }),
+            );
+          });
+        } else {
+          dispatch(loginFailure(errMessage));
+        }
+      } else {
+        dispatch(loginFailure(errMessage));
+      }
+    }
+  };
+};
+
+/**
+ * ------------------------
+ * Register action
+ * ------------------------
+ * */
+
+export const registerRequest = () => ({
+  type: REGISTER_REQUEST,
 });
 
-export const login = (credentials) => (dispatch) => {
-  dispatch(loginRequest());
-  axios
-    .post(API_URL + '/login', credentials)
-    .then((response) => {
-      if (response.status === 200) {
-        LocalStorageService.setItem(USER_TOKEN_KEY, response.data.token);
-        console.log(response);
-        batch(() => {
-          dispatch(loginSuccess(response.data));
-          dispatch(setAuthToken(response.data.token));
-        });
-      } else {
-        dispatch(loginFailure('Login failed'));
+export const registerFailure = (errorMessage) => ({
+  type: REGISTER_FAILURE,
+  payload: errorMessage,
+});
+
+export const registerSuccess = (data) => ({
+  type: REGISTER_SUCCESS,
+  payload: data,
+});
+
+export const register = (userData) => {
+  return async (dispatch) => {
+    let errMessage = 'Register failed';
+    dispatch(registerRequest());
+    try {
+      const response = await axios.post(API_URL + '/register', userData);
+      if (response.status === 201) {
+        LocalStorageService.setItem(
+          USER_TOKEN_KEY,
+          JSON.stringify(response.data),
+        );
+        dispatch(registerSuccess(response.data));
       }
-    })
-    .catch((e) => {
-      dispatch(loginFailure('Login failed'));
-    });
+    } catch (e) {
+      if (e.response !== undefined) {
+        console.log(e.response);
+        if (e.response.status === 422) {
+          errMessage = 'Unprocessable entity';
+          batch(() => {
+            dispatch(registerFailure(errMessage));
+            dispatch(
+              showAlert({
+                message: errMessage,
+                severity: 'error',
+              }),
+            );
+          });
+        }
+      } else {
+        batch(() => {
+          dispatch(registerFailure(errMessage));
+          dispatch(
+            showAlert({
+              message: errMessage,
+              severity: 'error',
+            }),
+          );
+        });
+      }
+    }
+  };
 };
 
 /**

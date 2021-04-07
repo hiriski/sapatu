@@ -5,5 +5,13 @@ import LocalStorageService from 'src/services/LocalStorageService';
  * Get user token from local storage
  */
 export const getUserToken = () => {
-  return LocalStorageService.getItem(USER_TOKEN_KEY);
+  try {
+    let userToken = LocalStorageService.getItem(USER_TOKEN_KEY);
+    if (userToken !== null) {
+      return JSON.parse(userToken);
+    }
+  } catch (e) {
+    console.log(e);
+    return;
+  }
 };

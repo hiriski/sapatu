@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_URL } from 'src/constants';
+import authApiClient from './authApiClient';
 
 import { getUserToken } from 'src/utils';
 
@@ -10,7 +11,7 @@ const apiInstance = axios.create();
 apiInstance.interceptors.request.use(
   async (config) => {
     const userToken = await getUserToken();
-    const token = JSON.parse(userToken).token;
+    const token = userToken.token;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -20,5 +21,7 @@ apiInstance.interceptors.request.use(
     return Promise.reject(error);
   },
 );
+
+export { authApiClient };
 
 export default apiInstance;
