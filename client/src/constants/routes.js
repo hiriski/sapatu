@@ -1,5 +1,6 @@
 export const ROUTES = {
   NOT_MATCH: '/app/404',
+  AUTH_GOOGLE: '/auth/google',
   LOGIN: '/login',
   REGISTER: '/register',
   DASHBOARD: '/app/dashboard',

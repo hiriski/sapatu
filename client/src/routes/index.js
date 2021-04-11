@@ -33,7 +33,9 @@ import CreateUserView from 'src/views/team/CreateUserView';
 const routes = (isLoggedIn) => [
   {
     path: '/app',
-    element: isLoggedIn ? <MainLayout /> : <Navigate to={ROUTES.LOGIN} />,
+    element: (
+      /* isLoggedIn ? */ <MainLayout />
+    ) /* : <Navigate to={ROUTES.LOGIN} /> */,
     children: [
       {
         path: 'dashboard',
@@ -92,7 +94,9 @@ const routes = (isLoggedIn) => [
   },
   {
     path: '/',
-    element: !isLoggedIn ? <AuthLayout /> : <Navigate to={ROUTES.DASHBOARD} />,
+    element: (
+      /* !isLoggedIn ? */ <AuthLayout />
+    ) /* : <Navigate to={ROUTES.DASHBOARD} /> */,
     children: [
       { path: 'login', element: <LoginView /> },
       { path: 'register', element: <RegisterView /> },

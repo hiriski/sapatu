@@ -20,10 +20,25 @@ const LoginView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [googleLoginUrl, setGoogleLoginUrl] = React.useState(null);
 
   const { isLoading, isSuccess, isError, errorMessage } = useSelector(
     (state) => state.auth.login,
   );
+
+  React.useEffect(() => {
+    fetch('http://apisapatu.riski.me/auth/google/url', {
+      headers: new Headers({ accept: 'application/json' }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Something went wrong!');
+      })
+      .then((data) => setGoogleLoginUrl(data.url))
+      .catch((error) => console.error(error));
+  }, []);
 
   return (
     <Page className={classes.root} title="Login">
@@ -124,6 +139,14 @@ const LoginView = () => {
               </form>
             )}
           </Formik>
+          <Box className={classes.socialLogin}>
+            {/* <RouterLink to={ROUTES.AUTH_GOOGLE}>Login with Google</RouterLink> */}
+            {googleLoginUrl && (
+              <a className="App-link" href={googleLoginUrl}>
+                Sign in with Google
+              </a>
+            )}
+          </Box>
         </Container>
       </Box>
     </Page>
