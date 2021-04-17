@@ -34,8 +34,8 @@ const ProductListView = () => {
 
   return (
     <Page title="List Produk">
-      <Container>
-        <Grid container spacing={4}>
+      <Container maxWidth="lg">
+        <Grid container spacing={3}>
           <Grid item xs={12} lg={12}>
             <PageTitle
               title="List Produk"

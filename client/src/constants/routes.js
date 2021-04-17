@@ -19,4 +19,5 @@ export const ROUTES = {
   CREATE_USER: '/app/team/create',
   CHAT: '/app/chat',
   KNOWLEDGE: '/app/knowledge',
+  ACCOUNT: 'Account',
 };

@@ -21,7 +21,7 @@ const MainLayout = () => {
       ) : (
         <>
           <Sidebar />
-          {/* <TopBar /> */}
+          <TopBar />
           <FloatingActions />
           <div className={classes.wrapper}>
             <Container disableGutters className={classes.contentContainer}>
@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flex: '1 1 auto',
     overflow: 'hidden',
-    // paddingTop: theme.spacing(12),
     [theme.breakpoints.up('lg')]: {
       paddingLeft: theme.custom.sidebar.width,
     },

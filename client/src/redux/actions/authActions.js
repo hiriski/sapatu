@@ -53,10 +53,7 @@ export const login = (credentials) => {
     try {
       const response = await axios.post(API_URL + '/login', credentials);
       if (response.status === 200) {
-        LocalStorageService.setItem(
-          USER_TOKEN_KEY,
-          JSON.stringify(response.data),
-        );
+        LocalStorageService.setItem(USER_TOKEN_KEY, response.data.token);
         dispatch(loginSuccess(response.data));
       }
     } catch (e) {

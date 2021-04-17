@@ -8,7 +8,7 @@ export const getUserToken = () => {
   try {
     let userToken = LocalStorageService.getItem(USER_TOKEN_KEY);
     if (userToken !== null) {
-      return JSON.parse(userToken);
+      return String(userToken);
     }
   } catch (e) {
     console.log(e);

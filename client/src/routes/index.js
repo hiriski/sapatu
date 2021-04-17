@@ -13,6 +13,7 @@ import LoginView from 'src/views/auth/LoginView';
 import RegisterView from 'src/views/auth/RegisterView';
 import NotMatchView from 'src/views/errors/NotMatchView';
 import SettingsView from 'src/views/settings';
+import AccountView from 'src/views/account/AccountView';
 
 import CreateProductView from 'src/views/product/CreateProductView';
 import ProductDetailsView from 'src/views/product/ProductDetailsView';
@@ -30,12 +31,10 @@ import KnowledgeView from 'src/views/knowledge';
 import CourierTrackingView from 'src/views/receipt/CourierTrackingView';
 import CreateUserView from 'src/views/team/CreateUserView';
 
-const routes = (isLoggedIn) => [
+const routes = (token) => [
   {
     path: '/app',
-    element: (
-      /* isLoggedIn ? */ <MainLayout />
-    ) /* : <Navigate to={ROUTES.LOGIN} /> */,
+    element: token ? <MainLayout /> : <Navigate to={ROUTES.LOGIN} />,
     children: [
       {
         path: 'dashboard',
@@ -86,6 +85,11 @@ const routes = (isLoggedIn) => [
         element: <Outlet />,
         children: [{ path: '/', element: <SettingsView /> }],
       },
+      {
+        path: 'account',
+        element: <Outlet />,
+        children: [{ path: '/', element: <AccountView /> }],
+      },
       { path: 'knowledge', element: <KnowledgeView /> },
       { path: 'settings', element: <SettingsView /> },
       { path: '404', element: <NotMatchView /> },
@@ -94,9 +98,7 @@ const routes = (isLoggedIn) => [
   },
   {
     path: '/',
-    element: (
-      /* !isLoggedIn ? */ <AuthLayout />
-    ) /* : <Navigate to={ROUTES.DASHBOARD} /> */,
+    element: !token ? <AuthLayout /> : <Navigate to={ROUTES.DASHBOARD} />,
     children: [
       { path: 'login', element: <LoginView /> },
       { path: 'register', element: <RegisterView /> },
